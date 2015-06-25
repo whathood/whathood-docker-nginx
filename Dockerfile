@@ -18,6 +18,10 @@ RUN apt-get update
 RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y vim curl wget build-essential python-software-properties
 RUN add-apt-repository -y ppa:ondrej/php5
 RUN add-apt-repository -y ppa:nginx/stable
+
+# for ruby 2.2
+RUN apt-add-repository --yes ppa:brightbox/ruby-ng
+
 RUN apt-get update
 RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y --force-yes php5-cli php5-fpm php5-mysql php5-pgsql php5-sqlite php5-curl\
 		       php5-gd php5-mcrypt php5-intl php5-imap php5-tidy
@@ -62,13 +66,14 @@ RUN npm install grunt --save-dev
 RUN npm install grunt-contrib-coffee --save-dev
 RUN npm install grunt-contrib-watch --save-dev
 RUN npm install grunt-contrib-clean --save-dev
-RUN npm install foreman --save-dev
 
 RUN cp /node_modules /var/www/whathood/ -r
 RUN grunt --gruntfile /var/www/whathood/Gruntfile.js coffee
 
 # install ruby
-RUN apt-get install -y ruby
+RUN apt-get install -y ruby2.2 ruby2.2-dev
+RUN gem install rerun
+RUN gem install foreman
 
 # clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
