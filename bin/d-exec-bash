@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+
+require 'docker'
+require 'pp'
+require 'jsmil'
+
+image_name = 'whathood-nginx-img:latest'
+
+init()
+
+container = Jsmil::Dockerasdf::running_container(image_name)
+
+BEGIN {
+    def init()
+        Jsmil::Util.root_or_die()
+    end
+}

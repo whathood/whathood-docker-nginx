@@ -1,0 +1,85 @@
+#!/usr/bin/env ruby
+
+IMG_NAME='whathood-nginx-img'
+
+base_dir = base_dir()
+
+unless repo_exists(base_dir()+"/www/whathood")
+  clone_repo(base_dir)
+end
+
+build_image(base_dir,IMG_NAME)
+
+BEGIN {
+
+    def repo_exists(dir)
+        unless Dir.exists?(dir) and Dir.chdir(dir)
+          return false
+        end
+        result=`git status`
+        return /On branch/ =~ result.to_s
+    end
+
+    def clone_repo(base_dir)
+      cmd = "rm -rf #{base_dir}/www/whathood"
+      unless system(cmd)
+        abort "could not remove www/whathood"
+      end
+      system "git clone https://github.com/jimRsmiley/whathood.git #{base_dir}/www/whathood"
+    end
+
+    def run_composer(base_dir)
+      working_dir = "#{base_dir}/www/whathood"
+      unless Dir.exists?(working_dir) and Dir.chdir(working_dir)
+        abort "could not change directory to #{working_dir}"
+      end
+      system "#{working_dir}/bin/run_composer"
+    end
+
+    def run_grunt(base_dir)
+      working_dir = "#{base_dir}/www/whathood"
+
+      Dir.chdir working_dir
+      unless File.exist? "Gruntfile.js"
+
+        abort "unable to find Gruntfile.js"
+      end
+
+      puts Dir.pwd()
+
+      module_dir = "#{working_dir}/node_modules"
+      unless File.exists?("#{module_dir}/grunt")
+        system("npm install --save-dev grunt")
+      end
+      unless File.exists?("#{module_dir}/grunt-contrib-coffee")
+        system("npm install --save-dev grunt-contrib-coffee")
+      end
+      unless File.exists?("#{module_dir}/grunt-contrib-watch")
+        system("npm install --save-dev grunt-contrib-watch")
+      end
+      unless File.exists?("#{module_dir}/grunt-contrib-clean")
+        system("npm install --save-dev grunt-contrib-clean")
+      end
+      system("grunt -v coffee")
+
+      unless File.exists? "#{base_dir}/www/whathood/app/public/js/whathood/whathood-compiled.js"
+        abort "whathood js was not compiled"
+      end
+    end
+
+    def build_image(base_dir,image_name)
+      puts "building image #{image_name}"
+      puts "docker build -t #{image_name} #{base_dir}"
+      system "docker build -t #{image_name} #{base_dir}"
+    end
+
+    def base_dir
+      return File.absolute_path(File.dirname(__FILE__))
+    end
+
+    def npm_package_installed(package_name)
+      result = `npm ls -json #package_name`
+
+      return !result.equal?('{}')
+    end
+}
