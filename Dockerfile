@@ -64,6 +64,8 @@ RUN npm install grunt-contrib-watch --save-dev
 RUN npm install grunt-contrib-clean --save-dev
 RUN npm install foreman --save-dev
 
+RUN cp /node_modules /var/www/whathood/ -r
+
 # install ruby
 RUN apt-get install -y ruby
 
