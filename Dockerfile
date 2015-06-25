@@ -62,6 +62,7 @@ RUN npm install grunt --save-dev
 RUN npm install grunt-contrib-coffee --save-dev
 RUN npm install grunt-contrib-watch --save-dev
 RUN npm install grunt-contrib-clean --save-dev
+RUN npm install foreman --save-dev
 
 # install ruby
 RUN apt-get install -y ruby
