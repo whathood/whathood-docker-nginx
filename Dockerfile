@@ -11,7 +11,6 @@ RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 CMD ["/sbin/my_init"]
 
-RUN echo 'Acquire::http { Proxy "http://172.17.42.1:3142"; };' >> /etc/apt/apt.conf.d/01proxy
 RUN apt-get update && apt-get install -y vim git
 
 # Nginx-PHP Installation
