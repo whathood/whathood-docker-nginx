@@ -68,7 +68,6 @@ RUN npm install grunt-contrib-watch --save-dev
 RUN npm install grunt-contrib-clean --save-dev
 
 RUN cp /node_modules /var/www/whathood/ -r
-RUN grunt --gruntfile /var/www/whathood/Gruntfile.js coffee
 
 # install ruby
 RUN apt-get install -y ruby2.2 ruby2.2-dev
