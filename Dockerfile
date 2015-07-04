@@ -52,6 +52,11 @@ RUN apt-get install -y postgresql postgresql-contrib postgresql-client-common
 RUN apt-get install -y git curl
 RUN apt-get install -y nodejs npm build-essential coffeescript
 
+# phpunit
+RUN wget https://phar.phpunit.de/phpunit.phar
+RUN chmod +x phpunit.phar
+RUN mv phpunit.phar /usr/local/bin/phpunit
+
 # set up env vars so connecting is easy
 RUN echo "export PGHOST='wh-postgis'" >> /etc/bash.bashrc
 RUN echo "export PGUSER='docker'" >> /etc/bash.bashrc
