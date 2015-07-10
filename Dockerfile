@@ -4,7 +4,7 @@ FROM phusion/baseimage:0.9.15
 RUN locale-gen en_US.UTF-8
 ENV LANG       en_US.UTF-8
 ENV LC_ALL     en_US.UTF-8
-
+ENV TERM       vt100
 ENV HOME /root
 
 RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
