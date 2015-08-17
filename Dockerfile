@@ -84,5 +84,14 @@ RUN apt-get install -y ruby2.2 ruby2.2-dev
 RUN gem install rerun
 RUN gem install foreman
 
+# install xdebug and webgrind
+RUN apt-get install -y unzip php5-dev php-pear php5-json
+RUN pecl install xdebug
+RUN echo 'zend_extension="/usr/lib/php5/20121212/xdebug.so"' >> /etc/php5/fpm/php.ini
+RUN echo 'xdebug.profiler_enable = 1' >> /etc/php5/fpm/php.ini
+RUN wget https://webgrind.googlecode.com/files/webgrind-release-1.0.zip
+RUN unzip webgrind-release-1.0.zip
+RUN mv webgrind /var/www
+
 # clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
