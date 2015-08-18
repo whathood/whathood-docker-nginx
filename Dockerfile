@@ -96,6 +96,13 @@ RUN wget https://webgrind.googlecode.com/files/webgrind-release-1.0.zip
 RUN unzip webgrind-release-1.0.zip
 RUN mv webgrind /var/www
 
+# php APC caching
+#RUN apt-get install -y make libpcre3-dev
+#RUN pecl install apc
+#RUN echo "extension = apc.so" >> /etc/php5/fpm/php.ini
+#RUN echo "apc.shm_size = 512" >> /etc/php5/fpm/php.ini
+#RUN echo "apc.stat = 0" >> /etc/php5/fpm/php.ini
+
 # OpCache
 RUN echo "opcache.enable=1" >> /etc/php5/fpm/php.ini
 RUN echo "opcache.memory_consumption=256" >> /etc/php5/fpm/php.ini
