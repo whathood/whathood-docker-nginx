@@ -96,5 +96,11 @@ RUN wget https://webgrind.googlecode.com/files/webgrind-release-1.0.zip
 RUN unzip webgrind-release-1.0.zip
 RUN mv webgrind /var/www
 
+# OpCache
+RUN echo "opcache.enable=1" >> /etc/php5/fpm/php.ini
+RUN echo "opcache.memory_consumption=256" >> /etc/php5/fpm/php.ini
+RUN echo "opcache.max_accelerated_files=4000" >> /etc/php5/fpm/php.ini
+RUN echo "opcache.revalidate_freq=60" >> /etc/php5/fpm/php.ini
+
 # clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
