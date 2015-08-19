@@ -89,22 +89,6 @@ RUN gem install foreman
 
 # OPCACHE
 ADD build/opcache.ini   /etc/php5/fpm/mods-available/opcache.ini
-# OpCache
-#RUN echo "opcache.enable=1" >> /etc/php5/fpm/php.ini
-#RUN echo "opcache.memory_consumption=256" >> /etc/php5/fpm/php.ini
-#RUN echo "opcache.max_accelerated_files=4000" >> /etc/php5/fpm/php.ini
-#RUN echo "opcache.revalidate_freq=60" >> /etc/php5/fpm/php.ini
-
-#RUN echo "opcache.revalidate_freq=0" >> /etc/php5/fpm/php.ini
-
-# install xdebug and webgrind
-RUN apt-get install -y unzip php5-dev php-pear php5-json
-RUN pecl install xdebug
-RUN echo 'zend_extension="/usr/lib/php5/20121212/xdebug.so"' >> /etc/php5/fpm/php.ini
-RUN echo 'xdebug.profiler_enable = 1' >> /etc/php5/fpm/php.ini
-RUN wget https://webgrind.googlecode.com/files/webgrind-release-1.0.zip
-RUN unzip webgrind-release-1.0.zip
-RUN mv webgrind /var/www
 
 # memcached
 RUN apt-get install -y php5-memcached memcached
