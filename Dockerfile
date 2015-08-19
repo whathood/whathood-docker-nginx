@@ -106,6 +106,8 @@ RUN wget https://webgrind.googlecode.com/files/webgrind-release-1.0.zip
 RUN unzip webgrind-release-1.0.zip
 RUN mv webgrind /var/www
 
+# memcached
+RUN apt-get install -y php5-memcached memcached
 
 # clean up
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
