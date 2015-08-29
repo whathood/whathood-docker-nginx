@@ -84,8 +84,10 @@ RUN cp /node_modules /var/www/whathood/ -r
 
 # install ruby
 RUN apt-get install -y ruby2.2 ruby2.2-dev
-RUN gem install rerun
-RUN gem install foreman
+RUN gem install \
+    rerun \
+    foreman \
+    colorize
 
 # OPCACHE
 ADD build/opcache.ini   /etc/php5/fpm/mods-available/opcache.ini
