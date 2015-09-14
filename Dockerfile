@@ -14,8 +14,6 @@ CMD ["/sbin/my_init"]
 
 RUN add-apt-repository -y ppa:ondrej/php5
 RUN add-apt-repository -y ppa:nginx/stable
-
-# for ruby 2.2
 RUN apt-add-repository --yes ppa:brightbox/ruby-ng
 
 RUN apt-get update && apt-get install -y vim git
@@ -29,8 +27,8 @@ RUN wget https://phar.phpunit.de/phpunit.phar
 RUN chmod +x phpunit.phar
 RUN sudo mv phpunit.phar /usr/local/bin/phpunit
 
-RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php5/fpm/php.ini
-RUN sed -i "s/;date.timezone =.*/date.timezone = UTC/" /etc/php5/cli/php.ini
+RUN sed -i "s/;date.timezone =.*/date.timezone = America\/New_York/" /etc/php5/fpm/php.ini
+RUN sed -i "s/;date.timezone =.*/date.timezone = America/\/New_York/" /etc/php5/cli/php.ini
 
 RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y nginx
 
