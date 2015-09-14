@@ -11,18 +11,16 @@ RUN /etc/my_init.d/00_regen_ssh_host_keys.sh
 
 CMD ["/sbin/my_init"]
 
-RUN apt-get update && apt-get install -y vim git
 
-# Nginx-PHP Installation
-RUN apt-get update
-RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y vim curl wget build-essential python-software-properties
 RUN add-apt-repository -y ppa:ondrej/php5
 RUN add-apt-repository -y ppa:nginx/stable
 
 # for ruby 2.2
 RUN apt-add-repository --yes ppa:brightbox/ruby-ng
 
-RUN apt-get update
+RUN apt-get update && apt-get install -y vim git
+
+RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y vim curl wget build-essential python-software-properties
 RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y --force-yes php5-cli php5-fpm php5-mysql php5-pgsql php5-sqlite php5-curl\
 		       php5-gd php5-mcrypt php5-intl php5-imap php5-tidy
 
@@ -57,6 +55,8 @@ RUN apt-get install -y postgresql postgresql-contrib postgresql-client-common
 RUN apt-get install -y git curl
 RUN apt-get install -y nodejs npm build-essential coffeescript
 
+RUN ln -s /etc/php5/fpm/mods-available/timezone.ini /etc/php5/fpm/conf.d/20-timezone.ini
+
 EXPOSE 80
 EXPOSE 81
 
@@ -83,6 +83,7 @@ RUN npm install grunt-contrib-clean --save-dev
 RUN cp /node_modules /var/www/whathood/ -r
 
 # install ruby
+RUN apt-get update
 RUN apt-get install -y ruby2.2 ruby2.2-dev
 RUN gem install \
     rerun \
@@ -91,6 +92,9 @@ RUN gem install \
 
 # OPCACHE
 ADD build/opcache.ini   /etc/php5/fpm/mods-available/opcache.ini
+
+# SET timezone
+ADD build/timezone.ini   /etc/php5/fpm/mods-available/timezone.ini
 
 # memcached
 RUN apt-get install -y php5-memcached memcached
