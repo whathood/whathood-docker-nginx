@@ -28,7 +28,7 @@ RUN chmod +x phpunit.phar
 RUN sudo mv phpunit.phar /usr/local/bin/phpunit
 
 RUN sed -i "s/;date.timezone =.*/date.timezone = America\/New_York/" /etc/php5/fpm/php.ini
-RUN sed -i "s/;date.timezone =.*/date.timezone = America/\/New_York/" /etc/php5/cli/php.ini
+RUN sed -i "s/;date.timezone =.*/date.timezone = America\/New_York/" /etc/php5/cli/php.ini
 
 RUN DEBIAN_FRONTEND="noninteractive" apt-get install -y nginx
 
