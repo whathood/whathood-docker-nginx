@@ -55,9 +55,6 @@ RUN apt-get install -y nodejs npm build-essential coffeescript
 
 RUN ln -s /etc/php5/fpm/mods-available/timezone.ini /etc/php5/fpm/conf.d/20-timezone.ini
 
-EXPOSE 80
-EXPOSE 81
-
 # phpunit
 RUN wget https://phar.phpunit.de/phpunit.phar
 RUN chmod +x phpunit.phar
