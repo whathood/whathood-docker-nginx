@@ -51,12 +51,8 @@ RUN chmod +x        /etc/service/phpfpm/run
 
 RUN apt-get install -y postgresql postgresql-contrib postgresql-client-common
 RUN apt-get install -y git curl
-RUN apt-get install -y nodejs npm build-essential coffeescript
 
 RUN ln -s /etc/php5/fpm/mods-available/timezone.ini /etc/php5/fpm/conf.d/20-timezone.ini
-
-EXPOSE 80
-EXPOSE 81
 
 # phpunit
 RUN wget https://phar.phpunit.de/phpunit.phar
@@ -68,17 +64,6 @@ RUN echo "export PGHOST='wh-postgis'" >> /etc/bash.bashrc
 RUN echo "export PGUSER='docker'" >> /etc/bash.bashrc
 RUN echo "export PGDATABASE='whathood'" >> /etc/bash.bashrc
 RUN echo "set -o vi" >>  /etc/bash.bashrc
-
-# install grunt
-RUN rm -f /usr/bin/node
-RUN ln -s /usr/bin/nodejs /usr/bin/node
-RUN npm install -g grunt-cli > /dev/null 2>&1
-RUN npm install grunt --save-dev
-RUN npm install grunt-contrib-coffee --save-dev
-RUN npm install grunt-contrib-watch --save-dev
-RUN npm install grunt-contrib-clean --save-dev
-
-RUN cp /node_modules /var/www/whathood/ -r
 
 # install ruby
 RUN apt-get update
